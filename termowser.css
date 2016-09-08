@@ -1,5 +1,5 @@
 body {
-  background: linear-gradient(0deg, black, #333);
+  background: linear-gradient(0deg, #111, #333);
   color: #080;
   font-family: monospace;
   padding: 0;
@@ -9,20 +9,20 @@ body {
 #left-panel {
   display: inline-block;
   width: 79vw;
-  height: 79vh;
+  height: 89vh;
   vertical-align: top;
 }
 
 #right-panel {
   display: inline-block;
   width: 19vw;
-  height: 79vh;
+  height: 89vh;
   vertical-align: top;
 }
 
 #top-panel {
   width: 98vw;
-  height: 19vh;
+  height: 9vh;
 }
 
 #prog-name {
@@ -61,8 +61,8 @@ input[type="text"] {
   appearance: none;
   box-shadow: none;
   border-radius: none;
-  border: 1px solid #040;
-  background-color: #444;
+  border: 2px solid #040;
+  background-color: black;
   color: #0F0;
 }
 

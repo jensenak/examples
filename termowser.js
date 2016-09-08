@@ -9,30 +9,8 @@
  *  - Clear the "terminal"
  *  - Unload a file
  */
-function terminal() {
-  // Variables and Init
-  var DOM = {
-    title: document.getElementById('prog-title'),
-    name: document.getElementById('prog-name'),
-    term: document.getElementById('term-window'),
-    input: document.getElementById('input-box'),
-    loaded: document.getElementById('loaded-prog'),
-    list: document.getElementById('prog-list')
-  }
 
-  var INNERS = {
-    readCallback = function(val) { return; }
-  }
-
-  DOM.input.addEventListener('keypress', function(e) {
-    var key = e.which || e.keyCode;
-    if (key === 13) {
-      INNERS.readCallback(DOM.input.value);
-      INNERS.readCallback = function(val) { return; };
-      DOM.input.value = "";
-    }
-  })
-
+(function() {
   function load(filename) {
     var program = document.createElement('script');
     var store = document.getElementById('loaded-prog');
@@ -41,10 +19,41 @@ function terminal() {
     store.appendChild(program);
   }
 
+  function unload(filename) {
+    return {status: "error", code: 500, message: "Not Implemented"};
+  }
+})();
+
+function terminal() {
+  // Variables and Init
+  var DOM = {
+    title: document.getElementById('prog-title'),
+    name: document.getElementById('prog-name'),
+    term: document.getElementById('term-window'),
+    input: document.getElementById('input-box'),
+    prog: document.getElementById('prog-file'),
+    loaded: document.getElementById('loaded-prog'),
+    list: document.getElementById('prog-list')
+  }
+
+  var INNERS = {
+    readCallback: function(val) { return; }
+  }
+
+  DOM.input.addEventListener('keyup', function(e) {
+    var key = e.which || e.keyCode;
+    if (key === 13) {
+      INNERS.readCallback(DOM.input.value);
+      write("<- " + DOM.input.value);
+      INNERS.readCallback = function(val) { return; };
+      DOM.input.value = "";
+    }
+  });
+
   function write(message) {
     var el = document.createElement("div");
     el.textContent = message;
-    term.appendChild(el);
+    DOM.term.appendChild(el);
     return {status: "ok", code: 200};
   }
 
@@ -62,14 +71,9 @@ function terminal() {
     return {status: "ok", code: 200};
   }
 
-  function unload(filename) {
-    return {status: "error", code: 500, message: "Not Implemented"};
-  }
-
   return {
-    load: load,
     write: write,
     read: read,
-    unload: unload
+    clear: clear
   }
 }
