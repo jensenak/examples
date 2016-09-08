@@ -3,17 +3,29 @@
 <head>
   <meta charset="UTF-8">
   <title>
-    Termowser - <span id="prog-title"></span>
+    TRMSR - [No File]
   </title>
+  <link rel="stylesheet" href="termowser.css"></link>
 </head>
 <body>
-  <div id="prog-name"></div>
-  <div id="term-window"></div>
-  <div id="input-box">
-    <input id="text">
-  </div>
-  <script src="termowser.js"></script>
-  <div id="loaded-prog">
-  </div>
+  <div id="top-panel">
+    <h1 id="prog-name">[No File]</h1>
+  </div><div><div id="left-panel">
+      <div id="term-window"></div>
+      <div id="input-box">
+        <input type="text" placeholder=">">
+      </div>
+      <script src="termowser.js"></script>
+      <div id="loaded-prog">
+      </div>
+    </div><div id="right-panel">
+      <div id="prog-list">
+      </div>
+      <div id="prog-actions">
+        <input type="text" placeholder="myprog.js">
+        <button>Load</button>
+      </div>
+    </div>
+  <div>
 </body>
 </html>

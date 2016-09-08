@@ -6,14 +6,33 @@
  *  - Load a file
  *  - Write output to the "terminal"
  *  - Read input from the "user"
+ *  - Clear the "terminal"
  *  - Unload a file
  */
-(function () {
-  // Onload things
-  return;
-})();
-
 function terminal() {
+  // Variables and Init
+  var DOM = {
+    title: document.getElementById('prog-title'),
+    name: document.getElementById('prog-name'),
+    term: document.getElementById('term-window'),
+    input: document.getElementById('input-box'),
+    loaded: document.getElementById('loaded-prog'),
+    list: document.getElementById('prog-list')
+  }
+
+  var INNERS = {
+    readCallback = function(val) { return; }
+  }
+
+  DOM.input.addEventListener('keypress', function(e) {
+    var key = e.which || e.keyCode;
+    if (key === 13) {
+      INNERS.readCallback(DOM.input.value);
+      INNERS.readCallback = function(val) { return; };
+      DOM.input.value = "";
+    }
+  })
+
   function load(filename) {
     var program = document.createElement('script');
     var store = document.getElementById('loaded-prog');
@@ -23,11 +42,24 @@ function terminal() {
   }
 
   function write(message) {
+    var el = document.createElement("div");
+    el.textContent = message;
+    term.appendChild(el);
     return {status: "ok", code: 200};
   }
 
-  function read() {
-    return 0;
+  function read(callback) {
+    if (typeof callback !== 'function') {
+      return {status:"error", code: 400, message: "Callback must be a function!"}
+    }
+    INNERS.readCallback = callback;
+  }
+
+  function clear() {
+    while (DOM.term.firstChild) {
+      DOM.term.removeChild(DOM.term.firstChild);
+    }
+    return {status: "ok", code: 200};
   }
 
   function unload(filename) {
