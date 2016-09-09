@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset="UTF-8">
-  <title>
+  <title id="page-title">
     TRMSR - [No File]
   </title>
   <link rel="stylesheet" href="termowser.css"></link>
@@ -10,20 +10,17 @@
 <body>
   <div id="top-panel">
     <h1 id="prog-name">[No File]</h1>
-  </div><div><div id="left-panel">
+    <center>
+      <input id="prog-file" type="text">
+      <button id="load-button">Load</button>
+    </center>
+  </div><div><div id="main-panel">
       <div id="term-window"></div>
       <div>
         <input id="input-box" type="text">
       </div>
       <script src="termowser.js"></script>
       <div id="loaded-prog">
-      </div>
-    </div><div id="right-panel">
-      <div id="prog-list">
-      </div>
-      <div id="prog-actions">
-        <input id="prog-file" type="text" placeholder="myprog.js">
-        <button>Load</button>
       </div>
     </div>
   <div>

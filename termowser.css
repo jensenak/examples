@@ -6,23 +6,16 @@ body {
   margin: 0;
 }
 
-#left-panel {
+#main-panel {
   display: inline-block;
-  width: 79vw;
-  height: 89vh;
-  vertical-align: top;
-}
-
-#right-panel {
-  display: inline-block;
-  width: 19vw;
-  height: 89vh;
+  width: 98vw;
+  height: 84vh;
   vertical-align: top;
 }
 
 #top-panel {
   width: 98vw;
-  height: 9vh;
+  height: 14vh;
 }
 
 #prog-name {
@@ -31,7 +24,7 @@ body {
 
 #term-window {
   margin: 5px;
-  width: 95%;
+  width: 98%;
   height: 80%;
   border: 2px solid #444;
   background-color: black;
@@ -39,14 +32,13 @@ body {
 
 #prog-list {
   margin: 5px;
-  width: 95%;
+  width: 97%;
   height: 80%;
   border: 2px solid #444;
   background-color: black;
 }
 
 button {
-  float: right;
   margin: 5px;
   background-color: #080;
   border: none;
@@ -54,9 +46,7 @@ button {
 }
 
 input[type="text"] {
-  display: block;
   margin: 5px;
-  width: 95%;
   font-family: monospace;
   appearance: none;
   box-shadow: none;
@@ -68,4 +58,19 @@ input[type="text"] {
 
 input[type="text"]:focus {
   outline: none;
+}
+
+#prog-file {
+  width: 25em;
+}
+
+#input-box {
+  width: 98%;
+}
+
+.program-item {
+  width: 100%;
+  background-color: #080;
+  color: black;
+  font-weight: bold;
 }

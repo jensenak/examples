@@ -1,44 +1,54 @@
 /* Termowser is designed to be a simple "commandline like" interface for new programmers.
  * The goal here is to give new learners the ability to have simple fun experiences like creating a
  * "if statement labyrinth" or classic "enter your name, enter your age" type programs.
- *
- * Basic functions are:
- *  - Load a file
- *  - Write output to the "terminal"
- *  - Read input from the "user"
- *  - Clear the "terminal"
- *  - Unload a file
  */
 
-(function() {
+document.addEventListener('DOMContentLoaded', function() {
+  var DOM = {
+    filename: document.getElementById('prog-file'),
+    button: document.getElementById('load-button'),
+    store: document.getElementById('loaded-prog')
+  }
+
+  DOM.button.addEventListener('click', function(e) {
+    load(DOM.filename.value);
+  });
+
+  DOM.filename.addEventListener('keyup', function(e) {
+    var key = e.which || e.keyCode;
+    if (key === 13) {
+      load(DOM.filename.value);
+      DOM.filename.value = '';
+    }
+  });
+
   function load(filename) {
     var program = document.createElement('script');
-    var store = document.getElementById('loaded-prog');
-    program.src = filename;
-    program.addEventListener('load', function () {});
-    store.appendChild(program);
+    var id = filename.toLowerCase().replace(' ', '-');
+    program.id = id;
+    program.src = "/programs/"+filename;
+    DOM.store.appendChild(program);
   }
+});
 
-  function unload(filename) {
-    return {status: "error", code: 500, message: "Not Implemented"};
-  }
-})();
-
-function terminal() {
+function terminal(programName) {
   // Variables and Init
   var DOM = {
-    title: document.getElementById('prog-title'),
+    title: document.getElementById('page-title'),
     name: document.getElementById('prog-name'),
     term: document.getElementById('term-window'),
-    input: document.getElementById('input-box'),
-    prog: document.getElementById('prog-file'),
-    loaded: document.getElementById('loaded-prog'),
-    list: document.getElementById('prog-list')
+    input: document.getElementById('input-box')
   }
 
   var INNERS = {
-    readCallback: function(val) { return; }
+    readCallback: function(val) { console.log("ReadCallback not set, value was: "+val); return; }
   }
+
+  if (programName === undefined) {
+    var programName = "Unnamed";
+  }
+  DOM.title.textContent = "TRMSR - "+programName;
+  DOM.name.textContent = programName;
 
   DOM.input.addEventListener('keyup', function(e) {
     var key = e.which || e.keyCode;
