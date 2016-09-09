@@ -28,6 +28,7 @@ body {
   height: 80%;
   border: 2px solid #444;
   background-color: black;
+  overflow-y: auto;
 }
 
 #prog-list {

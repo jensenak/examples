@@ -53,9 +53,13 @@ function terminal(programName) {
   DOM.input.addEventListener('keyup', function(e) {
     var key = e.which || e.keyCode;
     if (key === 13) {
-      INNERS.readCallback(DOM.input.value);
-      write("<- " + DOM.input.value);
+      console.log("Got event");
+      console.log(INNERS.readCallback);
+      var fn = INNERS.readCallback;
       INNERS.readCallback = function(val) { return; };
+      fn(DOM.input.value);
+      write("<- " + DOM.input.value);
+
       DOM.input.value = "";
     }
   });
@@ -68,10 +72,13 @@ function terminal(programName) {
   }
 
   function read(callback) {
+    console.log("Read callback about to be set");
+    console.log(INNERS.readCallback);
     if (typeof callback !== 'function') {
       return {status:"error", code: 400, message: "Callback must be a function!"}
     }
     INNERS.readCallback = callback;
+    console.log(INNERS.readCallback);
   }
 
   function clear() {
