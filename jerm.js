@@ -1,4 +1,4 @@
-/* Termowser is designed to be a simple "commandline like" interface for new programmers.
+/* Jerm is designed to be a simple "commandline like" interface for new programmers.
  * The goal here is to give new learners the ability to have simple fun experiences like creating a
  * "if statement labyrinth" or classic "enter your name, enter your age" type programs.
  */
