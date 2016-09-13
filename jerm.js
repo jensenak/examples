@@ -47,7 +47,7 @@ function terminal(programName) {
   if (programName === undefined) {
     var programName = "Unnamed";
   }
-  DOM.title.textContent = "TRMSR - "+programName;
+  DOM.title.textContent = "JERM - "+programName;
   DOM.name.textContent = programName;
 
   DOM.input.addEventListener('keyup', function(e) {
