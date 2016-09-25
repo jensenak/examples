@@ -1,4 +1,4 @@
-#from curses import wrapper
+import curses
 import sys
 
 class InputError(Exception):
@@ -6,77 +6,98 @@ class InputError(Exception):
 
 
 class Dungeon():
-    def __init__(self, src, states):
+    def __init__(self, scr, src, states):
+        self.scr = scr
         self.level = src
         self.states = states
 
     def fate(self, user):
         state = self.level[user.y][user.x]
-        print(self.states[state]["words"])
+        self.scr.addstr(0, 0, self.states[state]["words"], curses.color_pair(self.states[state]["color"]))
         if self.states[state]["dead"]:
+            self.scr.addstr(user.y, user.x, "X", curses.color_pair(2))
             user.respawn()
         if self.states[state]["win"]:
+            self.scr.getkey()
             sys.exit()
 
 
 class Player():
-    def __init__(self, name, spawn):
-        self.name = name
-        self.spawn = spawn
+    def __init__(self, scr, spawn):
+        self.scr = scr
+        self.px = spawn["x"]
+        self.py = spawn["y"]
         self.respawn()
 
     def respawn(self):
-        print()
-        self.x = self.spawn['x']
-        self.y = self.spawn['y']
+        self.x = self.px
+        self.y = self.py
 
     def move(self, dir):
-        if dir == "n":
+        self.scr.addstr(self.y, self.x, "#")
+        self.px = self.x
+        self.py = self.y
+        if dir == "KEY_UP":
             self.y -= 1
-        if dir == "s":
+        if dir == "KEY_DOWN":
             self.y += 1
-        if dir == "e":
+        if dir == "KEY_RIGHT":
             self.x += 1
-        if dir == "w":
+        if dir == "KEY_LEFT":
             self.x -= 1
 
 
-def parseInput(s):
-    if len(s) == 0:
-        raise InputError()
-    s = s.lower()[0]
-    if s in ['n','s','e','w']:
-        return s
-    if s == "q":
-        sys.exit()
-    raise InputError()
-
 stateMap = [
-    {"dead": False, "win": False, "words": "Keep going"},
-    {"dead": False, "win": True, "words": "You are the winner of the Universe!"},
-    {"dead": True, "win": False, "words": "You just became tasty lunch for a goblin"},
-    {"dead": True, "win": False, "words": "Your face melted ... IN A POOL OF LAVA"},
-    {"dead": True, "win": False, "words": "You are now a smudge on the bottom of a large boulder"},
-    {"dead": True, "win": False, "words": "You have been dissolved in acid"},
-    {"dead": True, "win": False, "words": "Oh look, you've been impaled"},
+    {"dead": False, "win": False, "words": "                                                     ", "color":0},
+    {"dead": False, "win": True, "words": "You are the winner of the Universe!                  ", "color":3},
+    {"dead": True, "win": False, "words": "You just became tasty lunch for a goblin             ", "color":2},
+    {"dead": True, "win": False, "words": "Your face melted ... IN A POOL OF LAVA               ", "color":2},
+    {"dead": True, "win": False, "words": "You are now a smudge on the bottom of a large boulder", "color":2},
+    {"dead": True, "win": False, "words": "You have been dissolved in acid                      ", "color":2},
+    {"dead": True, "win": False, "words": "Oh look, you've been impaled                         ", "color":2},
 ]
-level = [[2,2,2,2,2,2],
-         [3,0,3,2,2,2],
-         [4,0,0,4,2,2],
-         [5,0,5,0,1,2],
-         [6,0,0,0,5,2],
-         [2,6,2,3,4,2]]
+# level = [[2,2,2,2,2,2],
+#          [3,0,3,2,2,2],
+#          [4,0,0,4,2,2],
+#          [5,0,5,0,1,2],
+#          [6,0,0,0,5,2],
+#          [2,6,2,3,4,2]]
+level = [[2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2],
+        [2,0,2,2,2,2,2,2,2,2,2,2,2,2,2,2],
+        [2,0,2,2,2,2,0,0,0,0,0,0,0,2,2,2],
+        [2,0,2,2,2,2,2,2,2,0,2,2,0,2,2,2],
+        [2,0,0,0,2,0,0,0,0,0,2,2,0,2,2,2],
+        [2,0,2,0,2,0,2,2,0,2,2,2,0,2,2,2],
+        [2,0,2,0,2,0,2,2,0,2,2,2,0,2,2,2],
+        [2,0,0,0,0,0,2,2,0,2,2,2,0,2,2,2],
+        [2,2,2,2,2,2,2,2,0,2,2,2,0,0,2,2],
+        [2,2,2,2,2,0,0,0,0,2,2,2,2,0,2,2],
+        [2,2,2,2,2,0,0,0,0,0,0,0,0,0,2,2],
+        [2,1,0,0,2,0,0,0,0,2,2,0,2,2,2,2],
+        [2,2,2,0,2,2,0,2,2,2,2,0,2,2,2,2],
+        [2,2,2,0,2,2,0,2,2,2,2,0,2,2,2,2],
+        [2,2,0,0,0,0,0,2,2,2,2,2,2,2,2,2],
+        [2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2]]
 
-def main():
-    p = Player(input("What is your name? "), {"x": 1, "y": 1})
-    d = Dungeon(level, stateMap)
+
+def main(scr):
+    curses.curs_set(0)
+    curses.start_color()
+    curses.use_default_colors()
+    for i in range(0, curses.COLORS):
+        curses.init_pair(i + 1, i, -1)
+    scr.clear()
+    p = Player(scr, {"x": 1, "y": 1})
+    d = Dungeon(scr, level, stateMap)
 
     while True:
         try:
-            dir = parseInput(input("North, South, East, or West (q to quit)? "))
-            p.move(dir)
+            scr.addstr(p.y, p.x, "*", curses.color_pair(3))
+            scr.refresh()
+            k = scr.getkey()
+            p.move(k)
             d.fate(p)
         except InputError:
-            print("That's not a valid direction")
+            scr.addstr(11, 0, "That's not a valid direction")
 
-main()
+curses.wrapper(main)
