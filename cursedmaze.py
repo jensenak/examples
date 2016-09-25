@@ -11,6 +11,18 @@ class Dungeon():
         self.level = src
         self.states = states
 
+    def see(self, user):
+        for x in range(user.x - 1, user.x + 2):
+            for y in range(user.y - 1, user.y + 2):
+                if x == user.x and y == user.y:
+                    continue
+                if self.level[y][x] == 0:
+                    self.scr.addstr(y, x, "#")
+                elif self.level[y][x] == 1:
+                    self.scr.addstr(y, x, "O", curses.color_pair(4))
+                else:
+                    self.scr.addstr(y, x, "X", curses.color_pair(2))
+
     def fate(self, user):
         state = self.level[user.y][user.x]
         self.scr.addstr(0, 0, self.states[state]["words"], curses.color_pair(self.states[state]["color"]))
@@ -97,6 +109,7 @@ def main(scr):
             k = scr.getkey()
             p.move(k)
             d.fate(p)
+            d.see(p)
         except InputError:
             scr.addstr(11, 0, "That's not a valid direction")
 
