@@ -22,7 +22,7 @@ level = [[2,2,2,2,2,2],
 
 location = {"x": 1, "y": 1}
 
-def parseInput(s):
+def getFirstCharacter(s):
     if len(s) == 0:
         raise InputError()
     s = s.lower()[0]

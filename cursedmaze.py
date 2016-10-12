@@ -68,12 +68,7 @@ stateMap = [
     {"dead": True, "win": False, "words": "You have been dissolved in acid                      ", "color":2},
     {"dead": True, "win": False, "words": "Oh look, you've been impaled                         ", "color":2},
 ]
-# level = [[2,2,2,2,2,2],
-#          [3,0,3,2,2,2],
-#          [4,0,0,4,2,2],
-#          [5,0,5,0,1,2],
-#          [6,0,0,0,5,2],
-#          [2,6,2,3,4,2]]
+
 level = [[2,2,2,2,2,2,2,2,2,2,2,2,2,2,2,2],
         [2,0,2,2,2,2,2,2,2,2,2,2,2,2,2,2],
         [2,0,2,2,2,2,0,0,0,0,0,0,0,2,2,2],

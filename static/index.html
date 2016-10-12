@@ -2,74 +2,14 @@
 <html>
 <head>
 <title>ToDo List</title>
-<style>
-body {
-    background: #ccc;
-}
-
-#list {
-    font: bold 1.5em "Open Sans", sans-serif;
-    color: #48a;
-    background-color: #eee;
-    border: 2px solid #888;
-    padding: 10px 20px;
-    margin: 15px 0px;
-}
-
-.remover {
-    color: #b00;
-    cursor: pointer;
-}
-
-.dim {
-    color: #ccc;
-}
-</style>
+<link rel="stylesheet" href="/static/basic.css"></link>
 </head>
 <body>
     <input id="text" type="text">
     <button id="add">Add</button>
     <div id="list"></div>
-    
+
     <script src="https://code.jquery.com/jquery-2.2.0.min.js"></script>
-    <script>
-        $().ready(function() {
-            refreshList();
-            $("#add").on("click", addTodo);
-        });
-
-        function addTodo(evt) {
-            $.post("add", JSON.stringify($("#text").val())) 
-                .done(function (data) {
-                    refreshList();
-                });
-            $("#text").val('');
-        }
-        
-        function removeTodo(todo) {
-            $.post("remove", JSON.stringify(todo))
-                .done(function (data) {
-                    refreshList();
-                });
-            $("#text").val('');
-        }
-
-        function refreshList() {
-            $("#list").empty();
-            $.get("show")
-                .done(function (data) {
-                    for (item in data.items) {
-                        var x = $('<span class="remover"> x</span>');
-                        x.on("click", removeTodo.bind(undefined, data.items[item]));
-                        var elem = $(`<div class="item">${data.items[item]}</div>`);
-                        elem.append(x);
-                        $("#list").append(elem);
-                    }
-                    if (data.items.length === 0) {
-                        $("#list").append($("<div class='dim'>Nothing to see here ...</div>"));
-                    }
-                });
-        }
-    </script>
+    <script src="/static/basic.js"></script>
 </body>
 </html>
