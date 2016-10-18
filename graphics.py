@@ -45,8 +45,9 @@ class Player():
         return True
 
 def point(x, y, c):
-    win.set_at((x, y), c)
-    pygame.display.update(pygame.rect.Rect(x, y, 1, 1))
+    #win.set_at((x, y), c)
+    r = pygame.draw.line(win, c, (x, y), (x, y))
+    pygame.display.update(r)
     return
 
 def coin():
@@ -75,9 +76,12 @@ for i in range(2):
     cr = 255 - (i*255) #int(input("Enter player {} red ".format(i)))
     cg = 0 #int(input("Enter player {} green ".format(i)))
     cb = i*255 #int(input("Enter player {} blue ".format(i)))
+    sr = pygame.Surface
     players.append(Player(n, pygame.color.Color(cr, cg, cb), vectors[i]))
 
-win = pygame.display.set_mode((width, height))
+win = pygame.display.set_mode((width, height), pygame.DOUBLEBUF)
+win.set_alpha(None)
+pygame.event.set_allowed([pygame.QUIT, pygame.KEYUP])
 bg = pygame.color.Color(0,0,0,255)
 cg = pygame.color.Color(255,255,255,255)
 
