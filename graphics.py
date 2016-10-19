@@ -14,12 +14,12 @@ class Player():
         if win:
             self.score += 1
         self.x = random.randint(25, width - 25)
-        self.y = random.randint(25, height - 25) 
+        self.y = random.randint(25, height - 25)
         self.tail = [(self.x, self.y)]
-        self.length = 16 
+        self.length = 16
         self.dx = 0
         self.dy = -1
-    
+
     def trim(self):
         if len(self.tail) <= self.length:
             return
@@ -27,7 +27,7 @@ class Player():
         for px, py in self.tail[:cut]:
             point(px, py, bg)
         self.tail = self.tail[cut:]
-    
+
     def turn(self, key):
         self.dx, self.dy = self.vectors[key]
 
@@ -36,7 +36,7 @@ class Player():
 
     def update(self):
         self.x += self.dx
-        self.y += self.dy 
+        self.y += self.dy
         if collision(self, self.x, self.y):
             return False
         self.tail.append((self.x, self.y))
@@ -54,9 +54,9 @@ def coin():
     cx = random.randint(10, width - 10)
     cy = random.randint(10, height - 10)
     point(cx, cy, cg)
-    
-width = 400 #int(input("Enter width "))
-height = 300 #int(input("Enter height "))
+
+width = int(input("Enter width "))
+height = int(input("Enter height "))
 
 vectors = [{
     pygame.K_w: (0, -1),
@@ -72,11 +72,10 @@ vectors = [{
 
 players = []
 for i in range(2):
-    n = "p{}".format(i) #input("Enter player {} name ".format(i))
-    cr = 255 - (i*255) #int(input("Enter player {} red ".format(i)))
-    cg = 0 #int(input("Enter player {} green ".format(i)))
-    cb = i*255 #int(input("Enter player {} blue ".format(i)))
-    sr = pygame.Surface
+    n = input("Enter player {} name ".format(i))
+    cr = int(input("Enter player {} red ".format(i)))
+    cg = int(input("Enter player {} green ".format(i)))
+    cb = int(input("Enter player {} blue ".format(i)))
     players.append(Player(n, pygame.color.Color(cr, cg, cb), vectors[i]))
 
 win = pygame.display.set_mode((width, height), pygame.DOUBLEBUF)
@@ -98,7 +97,7 @@ def collision(p, x, y):
         return False
     if c != bg:
         return True
-        
+
 
 def run():
     init()
@@ -112,7 +111,7 @@ def run():
                 players[0].turn(event.key)
             elif event.key in vectors[1].keys():
                 players[1].turn(event.key)
-    
+
         if random.randint(1, 20) == 1:
             coin()
         if not players[0].update():
