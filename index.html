@@ -11,12 +11,17 @@
     <button id="add">Add Boxer</button>
     <script>
     // Define our "object" here
-    var person = {
-        name: "bob",
-        age: 3,
-        strength: null,
-        run: function() {
-            console.log("I'm running");
+    function Person(name, age, strength) {
+        return {
+            name: name,
+            age: age,
+            strength: strength,
+            run: function() {
+                console.log("I'm running");
+            },
+            sayName: function() {
+                console.log("My name is "+name);
+            }
         }
     }
     (function() {
