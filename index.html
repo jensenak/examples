@@ -11,9 +11,17 @@
     <button id="add">Add Boxer</button>
     <script>
     // Define our "object" here
-
+    var person = {
+        name: "bob",
+        age: 3,
+        strength: null,
+        run: function() {
+            console.log("I'm running");
+        }
+    }
     (function() {
         // Onload functions here
+        console.log("Started");
     })()
 
     // Define business logic here
