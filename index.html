@@ -20,7 +20,7 @@
         var strength = st;
         var speed = sp;
         var elem = document.createElement("div");
-        elem.textContent = name + " -> SPEED ["+speed+"]; STRENGTH ["+strength+"]";
+        elem.textContent = name + " -> SPEED ["+speed+"]; STRENGTH ["+strength+"] ";
         var x = document.createElement("span");
         x.textContent = "x";
         x.style = "border: 1px solid black;";
@@ -41,7 +41,8 @@
         // Here we "export" things we want the user to have access to
         var peep = {
             run: run,
-            sayName: sayName
+            sayName: sayName,
+            remove: remove
         }
         // Here we add our new person object to the people list
         people.push(peep);
