@@ -9,27 +9,58 @@
     <input id="strength" type="text" placeholder="0 - 3">
     <input id="speed" type="text" placeholder="0 - 3">
     <button id="add">Add Boxer</button>
+
+    <h3>People</h3>
+    <div id="people"></div>
     <script>
     // Define our "object" here
-    function Person(name, age, strength) {
-        return {
-            name: name,
-            age: age,
-            strength: strength,
-            run: function() {
-                console.log("I'm running");
-            },
-            sayName: function() {
-                console.log("My name is "+name);
-            }
+    var people = [];
+    function Person(n, st, sp) {
+        var name = n;
+        var strength = st;
+        var speed = sp;
+        var elem = document.createElement("div");
+        elem.textContent = name + " -> SPEED ["+speed+"]; STRENGTH ["+strength+"]";
+        var x = document.createElement("span");
+        x.textContent = "x";
+        x.style = "border: 1px solid black;";
+        x.dataset.person = people.length;
+        x.addEventListener("click", function () { people[this.dataset.person].remove(); });
+        elem.appendChild(x);
+        document.getElementById("people").appendChild(elem);
+        var run = function() {
+            console.log("I'm running");
+        };
+        var sayName = function() {
+            console.log("My name is "+name);
+        };
+        var remove = function() {
+            elem.parentElement.removeChild(elem);
         }
+
+        // Here we "export" things we want the user to have access to
+        var peep = {
+            run: run,
+            sayName: sayName
+        }
+        // Here we add our new person object to the people list
+        people.push(peep);
+        // And return the person
+        return peep
     }
+
     (function() {
         // Onload functions here
-        console.log("Started");
+        document.getElementById('add').addEventListener("click", addPerson);
     })()
 
     // Define business logic here
+    function addPerson(evt) {
+        var nameInput = document.getElementById("name").value;
+        var strengthInput = document.getElementById("strength").value;
+        var speedInput = document.getElementById("speed").value;
+        Person(nameInput, strengthInput, speedInput);
+    }
 
     </script>
 </body>
